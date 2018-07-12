@@ -1,7 +1,6 @@
 package console;
 
 import java.sql.Timestamp;
-import java.util.concurrent.TimeUnit;
 
 public class ConsoleTester {
 
@@ -9,7 +8,7 @@ public class ConsoleTester {
         ConsoleRunner.start();
         ConsoleRunner.mapToFunction("time", flagArgs -> printTime());
         ConsoleRunner.mapToFunction("print", flagArgs -> {
-            for(String flag : flagArgs) System.out.println(flag + " ");
+            for (String flag : flagArgs) System.out.println(flag + " ");
         });
 
         keepAlive();
@@ -19,7 +18,7 @@ public class ConsoleTester {
      * Keep the application alive for testing purposes.
      */
     static void keepAlive() {
-        while(true) {
+        while (true) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

@@ -39,17 +39,41 @@ public class ConsoleRunner {
      * Stops the console.
      */
     public static void stop() {
-            mKeepAlive = false;
+        mKeepAlive = false;
     }
 
     /**
      * Sets the sleep interval of time between console line reads.
+     *
      * @param interval The interval to set.
      */
     public static void setSleepInterval(long interval) {
         mSleepInterval = interval;
     }
 
+    /**
+     * Maps the function to the pattern provided. Flag provided should not include hyphen '-'.
+     *
+     * @param pattern  The pattern to match.
+     * @param function The function to be called.
+     */
+    public static void mapToFunction(String pattern, Caller function) {
+        if (null == mPatternMap) mPatternMap = new HashMap<>();
+
+        mPatternMap.put(pattern, function);
+    }
+
+    /**
+     * A simple interface representation of an method call.
+     */
+    public interface Caller {
+
+        void perform(String[] flagArgs);
+    }
+
+    /**
+     * A simple task that awaits console input.
+     */
     private static class ConsoleTask implements Runnable {
 
         @Override
@@ -72,7 +96,7 @@ public class ConsoleRunner {
 
                 String[] flags = Arrays.copyOfRange(tokens, 1, tokens.length);
 
-                for (int i = 0; i < flags.length ; ++i) {
+                for (int i = 0; i < flags.length; ++i) {
                     if ('-' != flags[i].charAt(0)) {
                         isValid = false;
                         break;
@@ -87,24 +111,5 @@ public class ConsoleRunner {
                         "check usage and try again. Proper syntax is <Command> -<flag> (ex: print -hello)");
             }
         }
-    }
-
-    /**
-     * Maps the function to the pattern provided. Flag provided should not include hyphen '-'.
-     * @param pattern The pattern to match.
-     * @param function The function to be called.
-     */
-    public static void mapToFunction(String pattern, Caller function) {
-        if (null == mPatternMap) mPatternMap = new HashMap<>();
-
-        mPatternMap.put(pattern, function);
-    }
-
-    /**
-     * A simple interface representation of an method call.
-     */
-    public interface Caller {
-
-        void perform(String[] flagArgs);
     }
 }
