@@ -13,7 +13,7 @@ Console arguments are added in the following format:
 ```
 <command> -<flag1> -<flag2> -<etc...>
 
-ex: print -hello -hi -hey
+example: print -hello -hi -hey
 ```
 
 Map functions to method calls with optional flag arguments:
