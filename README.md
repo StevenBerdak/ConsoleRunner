@@ -23,7 +23,7 @@ Map functions to method calls with optional flag arguments:
         ConsoleRunner.mapToFunction("time", flagArgs -> printTime());
         
         ConsoleRunner.mapToFunction("print", flagArgs -> {
-            for (String flag : flagArgs) System.out.println(flag + " ");
+            for (String flag : flagArgs) System.out.println(flag);
         });
         
         ConsoleRunner.mapToFunction("printstrings", ConsoleTester::printStrings);
