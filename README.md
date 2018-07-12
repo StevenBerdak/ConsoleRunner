@@ -1,5 +1,7 @@
 # S-Console
-A simple to use java based console. Simply add it to your project and call `Console.start()`.
+A simple to use java based console. Simply add it to your project.
+
+Start listening for user input: `Console.start()`
 
 
 ```
@@ -10,7 +12,7 @@ A simple to use java based console. Simply add it to your project and call `Cons
         });
 ```
 
-Call `Console.stop()` when you are done to stop listening for user input.
+Stop listening for user input when you are done: `Console.stop()`
 
 ```
         void stopConsole() {
