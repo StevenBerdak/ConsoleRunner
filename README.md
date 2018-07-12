@@ -8,7 +8,16 @@ Start listening for user input:
         ConsoleRunner.start();
 ```
 
+Console arguments are added in the following format:
+
+```
+<command> -<flag1> -<flag2> -<etc...>
+
+ex: print -hello -hi -hey
+```
+
 Map functions to method calls with optional flag arguments:
+
 
 ```
         ConsoleRunner.mapToFunction("time", flagArgs -> printTime());
@@ -20,13 +29,15 @@ Map functions to method calls with optional flag arguments:
         ConsoleRunner.mapToFunction("printstrings", ConsoleTester::printStrings);
 ```
 
-Stop listening for user input when you are done: `Console.stop()`
+Stop listening for user input when you are done:
+
 
 ```
         ConsoleRunner.stop();
 ```
 
 Change the interval between console line reads:
+
 
 ```
         ConsoleRunner.setSleepInterval(500);
