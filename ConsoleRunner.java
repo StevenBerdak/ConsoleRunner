@@ -9,6 +9,7 @@ import java.util.Scanner;
  */
 public class ConsoleRunner {
 
+    private static final String LOG_TAG = "ConsoleRunner";
     private static Thread mThread;
     private static boolean mKeepAlive;
     private static HashMap<String, Caller> mPatternMap;
@@ -32,7 +33,7 @@ public class ConsoleRunner {
 
         mKeepAlive = true;
         if (!mThread.isAlive()) mThread.start();
-        System.out.println("ConsoleRunner: Console initialized...");
+        System.out.println(LOG_TAG + ": Console initialized...");
     }
 
     /**
@@ -107,7 +108,7 @@ public class ConsoleRunner {
 
                 if (isValid && mPatternMap != null && mPatternMap.containsKey(tokens[0]))
                     mPatternMap.get(tokens[0]).perform(flags);
-                else System.out.println(getClass().getEnclosingClass().getName() + ": Command not recognized. Please " +
+                else System.out.println(LOG_TAG + ": Command not recognized. Please " +
                         "check usage and try again. Proper syntax is <Command> -<flag> (ex: print -hello)");
             }
         }
