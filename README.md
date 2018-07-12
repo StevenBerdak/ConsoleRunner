@@ -29,6 +29,12 @@ Map functions to method calls with optional flag arguments:
         ConsoleRunner.mapToFunction("printstrings", ConsoleTester::printStrings);
 ```
 
+Reset the console back to its starting state:
+
+```
+        ConsoleRunner.reset();
+```
+
 Stop listening for user input when you are done:
 
 
