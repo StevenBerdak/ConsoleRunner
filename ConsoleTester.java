@@ -1,6 +1,7 @@
 package console;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 
 public class ConsoleTester {
 
@@ -10,6 +11,7 @@ public class ConsoleTester {
         ConsoleRunner.mapToFunction("print", flagArgs -> {
             for (String flag : flagArgs) System.out.println(flag);
         });
+        ConsoleRunner.mapToFunction("printstrings", ConsoleTester::printStrings);
 
         keepAlive();
     }
@@ -25,6 +27,13 @@ public class ConsoleTester {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * A method that takes a String array as an argument and prints its contents.
+     */
+    static void printStrings(String[] strings) {
+        System.out.println(Arrays.toString(strings));
     }
 
     /**
