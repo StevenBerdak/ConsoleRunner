@@ -26,11 +26,16 @@ public class ConsoleRunner {
     }
 
     /**
-     * A constructor which takes in a map of patterns.
-     * @param patternMap A map of patterns to functions.
+     * Provides an instance of ConsoleRunner or creates a new one if necessary.
+     *
+     * @return An instance of ConsoleRunner.
      */
-    public ConsoleRunner(HashMap<String, Consumer<String[]>> patternMap) {
-        this.mPatternMap = patternMap;
+    public static ConsoleRunner getInstance() {
+        if (null == mInstance) {
+            mInstance = new ConsoleRunner();
+        }
+
+        return mInstance;
     }
 
     /**
@@ -54,18 +59,6 @@ public class ConsoleRunner {
         mKeepAlive = true;
         if (!mThread.isAlive()) mThread.start();
         System.out.println(LOG_TAG + ": Console initialized...");
-    }
-
-    /**
-     * Provides an instance of ConsoleRunner or creates a new one if necessary.
-     * @return An instance of ConsoleRunner.
-     */
-    public static ConsoleRunner getInstance() {
-        if (null == mInstance) {
-            mInstance = new ConsoleRunner();
-        }
-
-        return mInstance;
     }
 
     /**
