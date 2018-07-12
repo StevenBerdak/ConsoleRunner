@@ -29,7 +29,7 @@ Map functions to method calls with optional flag arguments:
         ConsoleRunner.mapToFunction("printstrings", ConsoleTester::printStrings);
 ```
 
-Reset the console back to its starting state:
+Reset the console back to its initial state:
 
 ```
         ConsoleRunner.reset();
