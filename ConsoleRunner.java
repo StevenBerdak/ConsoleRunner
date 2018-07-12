@@ -28,7 +28,6 @@ public class ConsoleRunner {
      */
     public static void reset() {
         stop();
-
         mPatternMap.clear();
         mSleepInterval = DEFAULT_SLEEP_INTERVAL;
     }
