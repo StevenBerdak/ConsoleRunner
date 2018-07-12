@@ -14,7 +14,7 @@ public class ConsoleRunner {
     private static final long DEFAULT_SLEEP_INTERVAL = 1000;
     private static Thread mThread;
     private static boolean mKeepAlive;
-    private static HashMap<String, Consumer<String[]>> mPatternMap;
+    private static HashMap<String, Consumer<String[]>> mCommandMap;
     private static long mSleepInterval = DEFAULT_SLEEP_INTERVAL;
 
     /**
@@ -29,7 +29,7 @@ public class ConsoleRunner {
      */
     public static void reset() {
         stop();
-        mPatternMap.clear();
+        mCommandMap.clear();
         mSleepInterval = DEFAULT_SLEEP_INTERVAL;
     }
 
@@ -64,15 +64,24 @@ public class ConsoleRunner {
     }
 
     /**
-     * Maps the function to the pattern provided. Flag provided should not include hyphen '-'.
+     * Maps the function to the command provided. Flags matching should not include hyphen '-'.
      *
-     * @param pattern  The pattern to match.
+     * @param command  The command to match.
      * @param function The function to be called.
      */
-    public static void mapToFunction(String pattern, Consumer<String[]> function) {
-        if (null == mPatternMap) mPatternMap = new HashMap<>();
+    public static void mapToFunction(String command, Consumer<String[]> function) {
+        if (null == mCommandMap) mCommandMap = new HashMap<>();
 
-        mPatternMap.put(pattern, function);
+        mCommandMap.put(command, function);
+    }
+
+    /**
+     * Removed the function from the command map.
+     *
+     * @param command The command to be removed.
+     */
+    public static void removeMapToFunction(String command) {
+        mCommandMap.remove(command);
     }
 
     /**
@@ -109,10 +118,14 @@ public class ConsoleRunner {
                     }
                 }
 
-                if (isValid && mPatternMap != null && mPatternMap.containsKey(tokens[0]))
-                    mPatternMap.get(tokens[0]).accept(flags);
-                else System.out.println(LOG_TAG + ": Command not recognized. Please " +
-                        "check usage and try again. Proper syntax is <Command> -<flag> (ex: print -hello)");
+                try {
+                    if (isValid && mCommandMap != null && mCommandMap.containsKey(tokens[0]))
+                        mCommandMap.get(tokens[0]).accept(flags);
+                    else System.out.println(LOG_TAG + ": Command not recognized. Please " +
+                            "check usage and try again. Proper syntax is <Command> -<flag> (ex: print -hello)");
+                } catch (NullPointerException e) {
+                    System.out.println("There was a problem with the specified command");
+                }
             }
         }
     }
