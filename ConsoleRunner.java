@@ -10,16 +10,27 @@ import java.util.Scanner;
 public class ConsoleRunner {
 
     private static final String LOG_TAG = "ConsoleRunner";
+    private static final long DEFAULT_SLEEP_INTERVAL = 1000;
     private static Thread mThread;
     private static boolean mKeepAlive;
     private static HashMap<String, Caller> mPatternMap;
-    private static long mSleepInterval = 1000;
+    private static long mSleepInterval = DEFAULT_SLEEP_INTERVAL;
 
     /**
      * Private constructor to prevent instantiation.
      */
     private ConsoleRunner() {
 
+    }
+
+    /**
+     * Resets the console back to its initial state.
+     */
+    public static void reset() {
+        stop();
+
+        mPatternMap.clear();
+        mSleepInterval = DEFAULT_SLEEP_INTERVAL;
     }
 
     /**
