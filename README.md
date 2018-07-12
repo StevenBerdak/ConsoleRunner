@@ -1,5 +1,5 @@
 # S-Console
-A simple class of static members to map commands that can be delivered in the console for use within a controller class. Listens to System.in input and runs any commands specified. Flags are checked by the caller and stored using `ConsoleRunner.mapToFunction("command", flagArgs -> { someFunction(); })` It is up to the developer to manage command entries. Commands are null checked prior to calling `Consumer.accept(flags)` to avoid unecesary NPEs.
+A simple class of static members to map commands that can be delivered in the console for use within a controller class. Listens to System.in input and runs any commands specified. Flags are checked by the caller and stored using `ConsoleRunner.mapToFunction("command", flagArgs -> { someFunction(); })` It is up to the developer to manage command entries. Commands are null checked prior to calling `Consumer.accept(flags)` to avoid unnecessary NPEs.
 
 Start listening for user input:
 
