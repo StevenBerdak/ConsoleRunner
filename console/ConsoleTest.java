@@ -5,15 +5,20 @@ import java.util.Arrays;
 
 public class ConsoleTest {
 
-    public static void main(String[] args) {
-        ConsoleRunner console = ConsoleRunner.getInstance();
+    public static boolean mKeepRunning = true;
 
-        console.start();
-        console.mapToFunction("time", flagArgs -> printTime());
-        console.mapToFunction("print", flagArgs -> {
+    public static void main(String[] args) {
+        ConsoleRunner.start();
+        ConsoleRunner.mapToFunction("time", flagArgs -> printTime());
+        ConsoleRunner.mapToFunction("print", flagArgs -> {
             for (String flag : flagArgs) System.out.println(flag);
         });
-        console.mapToFunction("printstrings", ConsoleTest::printStrings);
+        ConsoleRunner.mapToFunction("exit", flagArgs -> {
+            for (String flag : flagArgs) {
+                if (flag.equals("y")) exit();
+            }
+        });
+        ConsoleRunner.mapToFunction("printstrings", ConsoleTest::printStrings);
 
         keepAlive();
     }
@@ -22,7 +27,7 @@ public class ConsoleTest {
      * Keep the application alive for testing purposes.
      */
     static void keepAlive() {
-        while (true) {
+        while (mKeepRunning) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -43,5 +48,12 @@ public class ConsoleTest {
      */
     static void printTime() {
         System.out.println(new Timestamp(System.currentTimeMillis()).toString());
+    }
+
+    /**
+     * Exit the application.
+     */
+    static void exit() {
+        mKeepRunning = false;
     }
 }

@@ -12,11 +12,10 @@ public class ConsoleRunner {
 
     private static final String LOG_TAG = "ConsoleRunner";
     private static final long DEFAULT_SLEEP_INTERVAL = 1000;
-    private static ConsoleRunner mInstance;
-    private Thread mThread;
-    private boolean mKeepAlive;
-    private HashMap<String, Consumer<String[]>> mPatternMap;
-    private long mSleepInterval = DEFAULT_SLEEP_INTERVAL;
+    private static Thread mThread;
+    private static boolean mKeepAlive;
+    private static HashMap<String, Consumer<String[]>> mPatternMap;
+    private static long mSleepInterval = DEFAULT_SLEEP_INTERVAL;
 
     /**
      * Private constructor to prevent instantiation.
@@ -26,22 +25,9 @@ public class ConsoleRunner {
     }
 
     /**
-     * Provides an instance of ConsoleRunner or creates a new one if necessary.
-     *
-     * @return An instance of ConsoleRunner.
-     */
-    public static ConsoleRunner getInstance() {
-        if (null == mInstance) {
-            mInstance = new ConsoleRunner();
-        }
-
-        return mInstance;
-    }
-
-    /**
      * Resets the console back to its initial state.
      */
-    public void reset() {
+    public static void reset() {
         stop();
         mPatternMap.clear();
         mSleepInterval = DEFAULT_SLEEP_INTERVAL;
@@ -50,7 +36,7 @@ public class ConsoleRunner {
     /**
      * Starts the console to accept input.
      */
-    public void start() {
+    public static void start() {
         if (null == mThread) {
             mThread = new Thread(new ConsoleTask());
             mThread.setDaemon(true);
@@ -64,7 +50,7 @@ public class ConsoleRunner {
     /**
      * Stops the console.
      */
-    public void stop() {
+    public static void stop() {
         mKeepAlive = false;
     }
 
@@ -73,7 +59,7 @@ public class ConsoleRunner {
      *
      * @param interval The interval to set.
      */
-    public void setSleepInterval(long interval) {
+    public static void setSleepInterval(long interval) {
         mSleepInterval = interval;
     }
 
@@ -83,7 +69,7 @@ public class ConsoleRunner {
      * @param pattern  The pattern to match.
      * @param function The function to be called.
      */
-    public void mapToFunction(String pattern, Consumer<String[]> function) {
+    public static void mapToFunction(String pattern, Consumer<String[]> function) {
         if (null == mPatternMap) mPatternMap = new HashMap<>();
 
         mPatternMap.put(pattern, function);
@@ -92,7 +78,7 @@ public class ConsoleRunner {
     /**
      * A simple task that awaits console input.
      */
-    private class ConsoleTask implements Runnable {
+    private static class ConsoleTask implements Runnable {
 
         @Override
         public void run() {
