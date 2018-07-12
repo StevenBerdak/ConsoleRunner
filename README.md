@@ -22,3 +22,9 @@ Stop listening for user input when you are done: `Console.stop()`
 ```
         ConsoleRunner.stop();
 ```
+
+Change the interval between console line reads:
+
+```
+        ConsoleRunner.setSleepInterval(500);
+```
