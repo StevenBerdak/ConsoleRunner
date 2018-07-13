@@ -25,6 +25,15 @@ public class ConsoleRunner {
     }
 
     /**
+     * Free up all attached resources.
+     */
+    public void destroy() {
+        stop();
+        mThread = null;
+        mCommandMap = null;
+    }
+
+    /**
      * Resets the console back to its initial state.
      */
     public static void reset() {
@@ -64,7 +73,7 @@ public class ConsoleRunner {
     }
 
     /**
-     * Maps the function to the command provided. Flags matching should not include hyphen '-'.
+     * Map the function to the command provided. Flags matching should not include hyphen '-'.
      *
      * @param command  The command to match.
      * @param function The function to be called.
@@ -76,7 +85,7 @@ public class ConsoleRunner {
     }
 
     /**
-     * Removed the function from the command map.
+     * Remove the function from the command map.
      *
      * @param command The command to be removed.
      */
