@@ -71,12 +71,6 @@ Reset the console back to its initial state:
         consoleRunner.reset();
 ```
 
-Use 'destroy()' to free up resources:
-
-```
-        consoleRunner.destroy();
-```
-
 Change the interval between console line reads:
 
 ```
