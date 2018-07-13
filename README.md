@@ -50,7 +50,7 @@ Map functions to method calls with optional flag arguments:
             }
         });
         
-        consoleRunner.mapToFunction("printstrings", ConsoleTester::printStrings);
+        consoleRunner.mapToFunction("printstrings", ConsoleTest::printStrings);
 ```
 
 Remove mapped commands:
