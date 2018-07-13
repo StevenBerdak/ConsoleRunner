@@ -5,20 +5,33 @@ import java.util.Arrays;
 
 public class ConsoleTest {
 
-    public static boolean mKeepRunning = true;
+    static boolean mKeepRunning = true;
+    static ConsoleRunner mMyConsoleRunner;
 
     public static void main(String[] args) {
-        ConsoleRunner.start();
-        ConsoleRunner.mapToFunction("time", flagArgs -> printTime());
-        ConsoleRunner.mapToFunction("print", flagArgs -> {
+        mMyConsoleRunner = new ConsoleRunner("My Console", System.in);
+
+        mMyConsoleRunner.start();
+
+        mMyConsoleRunner.mapToFunction("time", flagArgs -> printTime());
+
+        mMyConsoleRunner.mapToFunction("print", flagArgs -> {
             for (String flag : flagArgs) System.out.println(flag);
         });
-        ConsoleRunner.mapToFunction("exit", flagArgs -> {
+
+        mMyConsoleRunner.mapToFunction("exit", flagArgs -> {
+            boolean yFlag = false;
             for (String flag : flagArgs) {
-                if (flag.equals("y")) exit();
+                if (flag.equals("y")) yFlag = true;
             }
+
+            if (yFlag) exit();
+            else System.out.println("You must enter a flag of 'y' to confirm (ex: \"exit -y\")");
         });
-        ConsoleRunner.mapToFunction("printstrings", ConsoleTest::printStrings);
+
+        mMyConsoleRunner.mapToFunction("printstrings", ConsoleTest::printStrings);
+
+        mMyConsoleRunner.mapToFunction("stop", flagArgs -> stop());
 
         keepAlive();
     }
@@ -55,5 +68,12 @@ public class ConsoleTest {
      */
     static void exit() {
         mKeepRunning = false;
+    }
+
+    /**
+     * Call stop on the ConsoleRunner.
+     */
+    static void stop() {
+        mMyConsoleRunner.stop();
     }
 }

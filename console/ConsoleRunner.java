@@ -1,74 +1,77 @@
 package console;
 
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * Sets up a console environment in a manner which does not block the main thread.
+ * Sets up a console environment in a way which does not block the main thread.
  */
 public class ConsoleRunner {
 
-    private static final String LOG_TAG = "ConsoleRunner";
-    private static Thread mThread;
-    private static boolean mKeepAlive;
-    private static HashMap<String, Consumer<String[]>> mCommandMap;
-    private static long mSleepInterval = 1000;
+    private InputStream mInputStream;
+    private Scanner mScanner;
+    private Thread mThread;
+    private String mCommand;
+    private String[] mTokens, mFlags;
+    private HashMap<String, Consumer<String[]>> mCommandMap;
+    private Logger mLogger;
+    private boolean mIsValid;
+    private boolean mKeepAlive;
 
     /**
-     * Private constructor to prevent instantiation.
+     * Constructor.
+     *
+     * @param inputStream The input stream to use for reading commands.
      */
-    private ConsoleRunner() {
-
-    }
-
-    /**
-     * Free up all attached resources.
-     */
-    public void destroy() {
-        stop();
-        mThread = null;
-        mCommandMap = null;
+    public ConsoleRunner(String consoleName, InputStream inputStream) {
+        mLogger = Logger.getLogger(consoleName);
+        this.mInputStream = inputStream;
     }
 
     /**
      * Resets the console back to its initial state.
      */
-    public static void reset() {
+    public void reset() {
         stop();
+        mThread = null;
+        mCommand = null;
+        mTokens = null;
+        mFlags = null;
         mCommandMap.clear();
-        mSleepInterval = 1000;
+        mIsValid = false;
     }
 
     /**
-     * Starts the console to accept input.
+     * Prepares to accept console input.
      */
-    public static void start() {
+    public void start() {
+        mScanner = new Scanner(mInputStream);
+
         if (null == mThread) {
             mThread = new Thread(new ConsoleTask());
             mThread.setDaemon(true);
         }
 
         mKeepAlive = true;
+
         if (!mThread.isAlive()) mThread.start();
-        System.out.println(LOG_TAG + ": Console initialized...");
+        mLogger.log(Level.INFO, "Console initialized...");
     }
 
     /**
      * Stops the console.
      */
-    public static void stop() {
-        mKeepAlive = false;
-    }
+    public void stop() {
 
-    /**
-     * Sets the sleep interval of time between console line reads.
-     *
-     * @param interval The interval to set.
-     */
-    public static void setSleepInterval(long interval) {
-        mSleepInterval = interval;
+        mKeepAlive = false;
+
+        mThread.interrupt();
+        mLogger.log(Level.INFO, "Console stopped");
     }
 
     /**
@@ -77,7 +80,7 @@ public class ConsoleRunner {
      * @param command  The command to match.
      * @param function The function to be called.
      */
-    public static void mapToFunction(String command, Consumer<String[]> function) {
+    public void mapToFunction(String command, Consumer<String[]> function) {
         if (null == mCommandMap) mCommandMap = new HashMap<>();
 
         mCommandMap.put(command, function);
@@ -88,51 +91,42 @@ public class ConsoleRunner {
      *
      * @param command The command to be removed.
      */
-    public static void removeMapToFunction(String command) {
+    public void removeMapToFunction(String command) {
         mCommandMap.remove(command);
     }
 
     /**
      * A simple task that awaits console input.
      */
-    private static class ConsoleTask implements Runnable {
+    private class ConsoleTask implements Runnable {
 
         @Override
         public void run() {
-            Scanner in = new Scanner(System.in);
-            boolean isValid;
-
             while (mKeepAlive) {
-                isValid = true;
+                mIsValid = true;
 
-                try {
-                    Thread.sleep(mSleepInterval);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                mCommand = mScanner.nextLine();
 
-                String command = in.nextLine();
+                mTokens = mCommand.split(" ");
 
-                String[] tokens = command.split(" ");
+                mFlags = Arrays.copyOfRange(mTokens, 1, mTokens.length);
 
-                String[] flags = Arrays.copyOfRange(tokens, 1, tokens.length);
-
-                for (int i = 0; i < flags.length; ++i) {
-                    if ('-' != flags[i].charAt(0)) {
-                        isValid = false;
+                for (int i = 0; i < mFlags.length; ++i) {
+                    if ('-' != mFlags[i].charAt(0)) {
+                        mIsValid = false;
                         break;
                     } else {
-                        flags[i] = flags[i].substring(1, flags[i].length());
+                        mFlags[i] = mFlags[i].substring(1, mFlags[i].length());
                     }
                 }
 
                 try {
-                    if (isValid && mCommandMap != null && mCommandMap.containsKey(tokens[0]))
-                        mCommandMap.get(tokens[0]).accept(flags);
-                    else System.out.println(LOG_TAG + ": Command not recognized. Please " +
+                    if (mIsValid && mCommandMap != null && mCommandMap.containsKey(mTokens[0]))
+                        mCommandMap.get(mTokens[0]).accept(mFlags);
+                    else if (!mCommand.equals("")) mLogger.log(Level.WARNING, "Command not recognized. Please " +
                             "check usage and try again. Proper syntax is <Command> -<flag> (ex: print -hello)");
                 } catch (NullPointerException e) {
-                    System.out.println("There was a problem with the specified command");
+                    mLogger.log(Level.WARNING, "There was a problem with the specified command");
                 }
             }
         }
