@@ -52,7 +52,7 @@ Reset the console back to its initial state:
         ConsoleRunner.reset();
 ```
 
-Use '.destroy()' to free up resources:
+Use 'destroy()' to free up resources:
 
 ```
         ConsoleRunner.destroy();
