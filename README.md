@@ -4,7 +4,7 @@ A simple lightweight library of static functions to map commands to methods. For
 Listens to System.in and runs any commands entered:
 
 ```
-        ConsoleRunner.mapToFunction("command", flagArgs -> { 
+        consoleRunner.mapToFunction("command", flagArgs -> { 
                 if (flagArgs[0].equals("s")) someFunction(); 
         })
 ``` 
@@ -13,64 +13,72 @@ Command entried can be added, removed, reset or destroyed altogether.
 
 Mapped methods for commands are null checked prior to calling `Consumer.accept(flags)` to avoid unnecessary NPEs.
 
+Create a new instance:
+
+```
+        ConsoleRunner consoleRunner = new ConsoleRunner("MyConsoleRunner", System.in);
+```
+
+
+
 Start listening for user input:
 
 ```
-        ConsoleRunner.start();
+        consoleRunner.start();
 ```
+Warning: Do not call System.in on multiple ConsoleRunners.
 
 Console commands are read in the following format:
 
 ```
 <command> -<flag1> -<flag2> -<etc...>
-
-example: print -hello -hi -hey
 ```
+example: print -hello -hi -hey
 
 Map functions to method calls with optional flag arguments:
 
 ```
-        ConsoleRunner.mapToFunction("time", flagArgs -> printTime());
+        consoleRunner.mapToFunction("time", flagArgs -> printTime());
         
-        ConsoleRunner.mapToFunction("print", flagArgs -> {
+        consoleRunner.mapToFunction("print", flagArgs -> {
             for (String flag : flagArgs) System.out.println(flag);
         });
         
-        ConsoleRunner.mapToFunction("exit", flagArgs -> {
+        consoleRunner.mapToFunction("exit", flagArgs -> {
             for (String flag : flagArgs) {
                 if (flag.equals("y")) exit();
             }
         });
         
-        ConsoleRunner.mapToFunction("printstrings", ConsoleTester::printStrings);
+        consoleRunner.mapToFunction("printstrings", ConsoleTester::printStrings);
 ```
 
 Remove mapped commands:
 
 ```
-        ConsoleRunner.removeMapToFunction("time");
+        consoleRunner.removeMapToFunction("time");
 ```
 
 Stop listening for user input when you are done:
 
 ```
-        ConsoleRunner.stop();
+        consoleRunner.stop();
 ```
 
 Reset the console back to its initial state:
 
 ```
-        ConsoleRunner.reset();
+        consoleRunner.reset();
 ```
 
 Use 'destroy()' to free up resources:
 
 ```
-        ConsoleRunner.destroy();
+        consoleRunner.destroy();
 ```
 
 Change the interval between console line reads:
 
 ```
-        ConsoleRunner.setSleepInterval(500);
+        consoleRunner.setSleepInterval(500);
 ```
