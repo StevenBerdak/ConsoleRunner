@@ -11,11 +11,10 @@ import java.util.function.Consumer;
 public class ConsoleRunner {
 
     private static final String LOG_TAG = "ConsoleRunner";
-    private static final long DEFAULT_SLEEP_INTERVAL = 1000;
     private static Thread mThread;
     private static boolean mKeepAlive;
     private static HashMap<String, Consumer<String[]>> mCommandMap;
-    private static long mSleepInterval = DEFAULT_SLEEP_INTERVAL;
+    private static long mSleepInterval = 1000;
 
     /**
      * Private constructor to prevent instantiation.
@@ -39,7 +38,7 @@ public class ConsoleRunner {
     public static void reset() {
         stop();
         mCommandMap.clear();
-        mSleepInterval = DEFAULT_SLEEP_INTERVAL;
+        mSleepInterval = 1000;
     }
 
     /**
