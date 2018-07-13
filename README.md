@@ -19,7 +19,7 @@ Start listening for user input:
         ConsoleRunner.start();
 ```
 
-Console arguments are added in the following format:
+Console commands are read in the following format:
 
 ```
 <command> -<flag1> -<flag2> -<etc...>
