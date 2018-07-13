@@ -1,7 +1,7 @@
 # ConsoleRunner
 A simple lightweight library of static functions to map commands to methods. For use within console heavy applications to provide basic console commands and execution flow control using flags.
 
-Listens to System.in and runs any commands entered.
+Listens to System.in and runs any commands entered:
 
 ```
         ConsoleRunner.mapToFunction("command", flagArgs -> { 
