@@ -70,9 +70,3 @@ Reset the console back to its initial state:
 ```
         consoleRunner.reset();
 ```
-
-Change the interval between console line reads:
-
-```
-        consoleRunner.setSleepInterval(500);
-```
