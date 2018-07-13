@@ -11,7 +11,7 @@ Listens to System.in and runs any commands entered:
 
 Command entried can be added, removed, reset or destroyed all together.
 
-Commands are null checked prior to calling `Consumer.accept(flags)` to avoid unnecessary NPEs.
+Mapped methods for commands are null checked prior to calling `Consumer.accept(flags)` to avoid unnecessary NPEs.
 
 Start listening for user input:
 
