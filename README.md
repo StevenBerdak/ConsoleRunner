@@ -40,16 +40,22 @@ Remove mapped commands:
         ConsoleRunner.removeMapToFunction("time");
 ```
 
+Stop listening for user input when you are done:
+
+```
+        ConsoleRunner.stop();
+```
+
 Reset the console back to its initial state:
 
 ```
         ConsoleRunner.reset();
 ```
 
-Stop listening for user input when you are done:
+Use '.destroy()' to free up resources:
 
 ```
-        ConsoleRunner.stop();
+        ConsoleRunner.destroy();
 ```
 
 Change the interval between console line reads:
