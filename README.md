@@ -26,7 +26,7 @@ Start listening for user input:
 ```
         consoleRunner.start();
 ```
-Warning: Do not call System.in on multiple ConsoleRunners.
+Warning: Do not use System.in as the InputStream for more than a single ConsoleRunner
 
 Console commands are read in the following format:
 
