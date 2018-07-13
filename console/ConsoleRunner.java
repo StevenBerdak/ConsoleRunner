@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 /**
- * Sets up a console environment in a non-blocking manner on a separate thread.
+ * Sets up a console environment in a manner which does not block the main thread.
  */
 public class ConsoleRunner {
 
