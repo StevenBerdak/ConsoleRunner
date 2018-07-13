@@ -1,5 +1,5 @@
 # ConsoleRunner
-A simple lightweight library of static members to map commands to functions that can be delivered in the console for use within a controller class. 
+A simple lightweight library of static functions to map commands to functions that can be delivered in the console for use within a controller class. 
 
 Listens to System.in and runs any commands entered.
 
