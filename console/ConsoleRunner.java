@@ -1,5 +1,6 @@
-package com.triquesoft.slydables.wordlibgen.console;
+package com.triquesoft.slydableslibrarytools.console;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,6 +28,7 @@ public class ConsoleRunner extends Observable {
     private boolean mAwaitInput;
     private boolean mKeepAlive;
     private Observer mObserver;
+    private File mWorkingDir;
 
     /**
      * Constructor.
@@ -156,6 +158,28 @@ public class ConsoleRunner extends Observable {
     }
 
     /**
+     * Sets the current working directory which can be called using getmWorkingDirectory.
+     * @param workingDirectory A string containing a path to a directory.
+     */
+    public void setWorkingDirectory(String workingDirectory) {
+        File directory = new File(workingDirectory);
+        if(directory.isDirectory()) {
+            mWorkingDir = directory;
+        } else {
+            mLogger.log(Level.WARNING, workingDirectory + " is not a valid directory");
+        }
+    }
+
+    /**
+     * The current working directory.
+     *
+     * @return File pointing to the current working directory.
+     */
+    public File getmWorkingDirectory() {
+        return mWorkingDir;
+    }
+
+    /**
      * A simple task that awaits console input.
      */
     private class ConsoleTask implements Runnable {
@@ -172,7 +196,7 @@ public class ConsoleRunner extends Observable {
                 mFlags = Arrays.copyOfRange(mTokens, 1, mTokens.length);
 
                 for (int i = 0; i < mFlags.length; ++i) {
-                    if ('-' != mFlags[i].charAt(0)) {
+                    if (mFlags[i].length() > 0 && '-' != mFlags[i].charAt(0)) {
                         mIsValid = false;
                         break;
                     } else {
