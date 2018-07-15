@@ -1,4 +1,4 @@
-# ConsoleRunner
+# ZetaConsole
 A simple lightweight class to map commands to methods. For use within console heavy applications to provide basic console commands and execution flow control using flags.
 
 Listens to System.in and runs any commands entered:
