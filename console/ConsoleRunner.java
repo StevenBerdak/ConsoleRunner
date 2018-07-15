@@ -55,7 +55,6 @@ public class ConsoleRunner extends Observable {
         mKeepAliveThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.print("test");
                 while (mKeepAlive) {
                     try {
                         Thread.sleep(1000);
