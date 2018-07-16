@@ -9,7 +9,7 @@ Listens to System.in and runs any commands entered:
         })
 ``` 
 
-Command entried can be added, removed, or reset.
+Command entries can be added, removed, or reset.
 
 Mapped methods for commands are null checked prior to calling `Consumer.accept(flags)` to avoid unnecessary NPEs.
 
