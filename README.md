@@ -1,7 +1,7 @@
 # ζetaConsole
 A simple lightweight single-class API to map commands to functions for use within console based applications. Provides basic console commands and execution control using flags.
 
-Listens to System.in and runs any commands entered:
+Listens to input stream and runs any commands entered:
 
 ```
         consoleRunner.mapToFunction("command", flagArgs -> { 
