@@ -26,7 +26,6 @@ Start listening for user input:
 ```
         consoleRunner.start();
 ```
-Warning: Do not use System.in more than once
 
 Console commands are read in the following format:
 
