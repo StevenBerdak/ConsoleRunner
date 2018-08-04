@@ -34,7 +34,7 @@ Console commands are read in the following format:
 ```
 example: print -hello -hi -hey
 
-Map functions to console input with optional flag arguments:
+Map console input to functions with optional flag arguments:
 
 ```
         consoleRunner.mapToFunction("time", flagArgs -> printTime());
