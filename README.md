@@ -1,17 +1,17 @@
 # ζetaConsole
-A simple lightweight single-class API to map commands to functions for use within console based applications. Provides basic console commands and execution control using flags.
+A simple lightweight single-class API to map commands to functions for use within console based applications. Provides basic console commands and execution control using options/flags.
 
 Listens to input stream and runs any commands entered:
 
 ```
-        zetaConsole.mapToFunction("command", flagArgs -> { 
-                if (flagArgs[0].equals("s")) someFunction(); 
+        zetaConsole.mapToFunction("command", options -> { 
+                if (options[0].equals("s")) someFunction(); 
         })
 ``` 
 
 Command entries can be added, removed, or reset.
 
-Mapped methods for commands are null checked prior to calling `Consumer.accept(flags)` to avoid unnecessary NPEs.
+Mapped methods for commands are null checked prior to calling `Consumer.accept(options)` to avoid unnecessary NPEs.
 
 Create a new instance:
 
@@ -30,22 +30,22 @@ Start listening for user input:
 Console commands are read in the following format:
 
 ```
-<command> -<flag1> -<flag2> -<etc...>
+<command> <option1> <option2> <etc...>
 ```
 example: print -hello -hi -hey
 
-Map console input to functions with optional flag arguments:
+Map console input to functions with optional arguments:
 
 ```
-        zetaConsole.mapToFunction("time", flagArgs -> printTime());
+        zetaConsole.mapToFunction("time", options -> printTime());
         
-        zetaConsole.mapToFunction("print", flagArgs -> {
-            for (String flag : flagArgs) System.out.println(flag);
+        zetaConsole.mapToFunction("print", options -> {
+            for (String options : options) System.out.println(options);
         });
         
-        zetaConsole.mapToFunction("exit", flagArgs -> {
-            for (String flag : flagArgs) {
-                if (flag.equals("y")) exit();
+        zetaConsole.mapToFunction("exit", options -> {
+            for (String options : options) {
+                if (options.equals("y")) exit();
             }
         });
         

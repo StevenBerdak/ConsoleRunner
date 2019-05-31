@@ -18,7 +18,7 @@ public class ZetaConsole {
     private Scanner mScanner;
     private Thread mInputThread, mKeepAliveThread;
     private String mCommand;
-    private String[] mTokens, mFlags;
+    private String[] mTokens, mOptions;
     private HashMap<String, Consumer<String[]>> mCommandMap;
     private Logger mLogger;
     private boolean mIsValid;
@@ -78,7 +78,7 @@ public class ZetaConsole {
         mInputThread = null;
         mCommand = null;
         mTokens = null;
-        mFlags = null;
+        mOptions = null;
         mCommandMap.clear();
         mIsValid = false;
     }
@@ -112,7 +112,7 @@ public class ZetaConsole {
     }
 
     /**
-     * Map the function to the command provided. Flags matching should not include hyphen '-'.
+     * Map the function to the command provided.
      *
      * @param command  The command to match.
      * @param function The function to be called.
@@ -168,23 +168,14 @@ public class ZetaConsole {
 
                 mTokens = mCommand.split(" ");
 
-                mFlags = Arrays.copyOfRange(mTokens, 1, mTokens.length);
-
-                for (int i = 0; i < mFlags.length; ++i) {
-                    if (mFlags[i].length() > 0 && '-' != mFlags[i].charAt(0)) {
-                        mIsValid = false;
-                        break;
-                    } else {
-                        mFlags[i] = mFlags[i].substring(1);
-                    }
-                }
+                mOptions = Arrays.copyOfRange(mTokens, 1, mTokens.length);
 
                 try {
                     if (mIsValid && mCommandMap != null && mCommandMap.containsKey(mTokens[0]))
-                       mCommandMap.get(mTokens[0]).accept(mFlags);
+                       mCommandMap.get(mTokens[0]).accept(mOptions);
                     else if (!mCommand.equals(""))
                         mLogger.log(Level.WARNING, "Command not recognized. Please " +
-                                "check usage and try again. Proper syntax is <Command> -<flag> (ex: print -hello)");
+                                "check usage and try again. Proper syntax is <Command> <...option> (ex: print hello)");
                 } catch (NullPointerException e) {
                     mLogger.log(Level.WARNING, "There was a problem with the specified command");
                 }
