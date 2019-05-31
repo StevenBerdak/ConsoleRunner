@@ -4,7 +4,7 @@ A simple lightweight single-class API to map commands to functions for use withi
 Listens to input stream and runs any commands entered:
 
 ```
-        consoleRunner.mapToFunction("command", flagArgs -> { 
+        zetaConsole.mapToFunction("command", flagArgs -> { 
                 if (flagArgs[0].equals("s")) someFunction(); 
         })
 ``` 
@@ -16,7 +16,7 @@ Mapped methods for commands are null checked prior to calling `Consumer.accept(f
 Create a new instance:
 
 ```
-        ConsoleRunner consoleRunner = new ConsoleRunner("MyConsoleRunner", System.in);
+        ZetaConsole zetaConsole = new ZetaConsole("MyConsole", System.in);
 ```
 
 
@@ -24,7 +24,7 @@ Create a new instance:
 Start listening for user input:
 
 ```
-        consoleRunner.start();
+        zetaConsole.start();
 ```
 
 Console commands are read in the following format:
@@ -37,35 +37,35 @@ example: print -hello -hi -hey
 Map console input to functions with optional flag arguments:
 
 ```
-        consoleRunner.mapToFunction("time", flagArgs -> printTime());
+        zetaConsole.mapToFunction("time", flagArgs -> printTime());
         
-        consoleRunner.mapToFunction("print", flagArgs -> {
+        zetaConsole.mapToFunction("print", flagArgs -> {
             for (String flag : flagArgs) System.out.println(flag);
         });
         
-        consoleRunner.mapToFunction("exit", flagArgs -> {
+        zetaConsole.mapToFunction("exit", flagArgs -> {
             for (String flag : flagArgs) {
                 if (flag.equals("y")) exit();
             }
         });
         
-        consoleRunner.mapToFunction("printstrings", ConsoleTest::printStrings);
+        zetaConsole.mapToFunction("printstrings", ConsoleTest::printStrings);
 ```
 
 Remove mapped commands:
 
 ```
-        consoleRunner.removeMapToFunction("time");
+        zetaConsole.removeMapToFunction("time");
 ```
 
 Stop listening for user input when you are done:
 
 ```
-        consoleRunner.stop();
+        zetaConsole.stop();
 ```
 
 Reset the console back to its initial state:
 
 ```
-        consoleRunner.reset();
+        zetaConsole.reset();
 ```
