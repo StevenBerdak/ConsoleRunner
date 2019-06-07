@@ -32,7 +32,7 @@ Console commands are read in the following format:
 ```
 <command> <option1> <option2> <etc...>
 ```
-example: print -hello -hi -hey
+example: print hello hi hey
 
 Map console input to functions with optional arguments:
 
